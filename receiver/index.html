@@ -6,13 +6,13 @@
 	<script src="http://kgit.html5video.org/tags/v2.0.0.rc4/mwEmbedLoader.php"></script>
 	<script>
 		$(function() {
-			var receiver = new cast.receiver.Receiver('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', ['HelloWorld']),
-				channelHandler = new cast.receiver.ChannelHandler('HelloWorld'),
+			var receiver = new cast.receiver.Receiver('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', ['KalturaPlayerController']),
+				channelHandler = new cast.receiver.ChannelHandler('KalturaPlayerController'),
 				$messages = $('.messages'),
 				$body = $('body');
 			
 			channelHandler.addChannelFactory(
-				receiver.createChannelFactory('HelloWorld'));
+				receiver.createChannelFactory('KalturaPlayerController'));
 	
 			receiver.start();
 	
@@ -46,14 +46,14 @@
 				'readyCallback': function( playerId ){
 					console.log('k-ready-called');
 					window.kdp = $('#'+playerId).get(0);
-					kdp.addJsListener("playerUpdatePlayhead", 'playerStartedPlaybackControlReady');
+					kdp.addJsListener("playerPlayed", 'playerPlaybackControlReady');
 				}
 			});
 
 		});
 		
-		function playerStartedPlaybackControlReady() {
-			kdp.removeJsListener("playerUpdatePlayhead", 'startSeekPlayer');
+		function playerPlaybackControlReady() {
+			kdp.removeJsListener("playerPlayed", 'playerPlaybackControlReady');
 			console.log('k-playback-control-ready');
 		}
 	</script>

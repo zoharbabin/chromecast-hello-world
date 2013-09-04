@@ -12,8 +12,8 @@
 				<li>Looking for receivers...</li>
 			</ul>
 		</div>
-		<button class="btn" id="playbtn" disabled>Play</button>
-		<button class="btn" id="pausebtn" disabled>Pause</button>
+		<button class="btn" id="playbtn" >Play</button>
+		<button class="btn" id="pausebtn" >Pause</button>
 		<button class="btn" id="killconbtn" disabled>Kill the Connection</button>
 		<script>
 			var cast_api,
@@ -75,7 +75,7 @@
 				if (activity.status === 'running') {
 					cv_activity = activity;
 					
-					cast_api.sendMessage(cv_activity.activityId, 'HelloWorld', {type: 'HelloWorld'});
+					cast_api.sendMessage(cv_activity.activityId, 'KalturaPlayerController', {type: 'KalturaPlayerController'});
 				}
 			};
 	
@@ -85,6 +85,14 @@
 				
 					$killSwitch.prop('disabled', true);
 				});
+			});
+			
+			$pausebtn.on('click', function() {
+				cast_api.sendMessage(cv_activity.activityId, 'KalturaPlayerController', {type: 'pausePlayer'});
+			});
+			
+			$playbtn.on('click', function() {
+				cast_api.sendMessage(cv_activity.activityId, 'KalturaPlayerController', {type: 'pausePlayer'});
 			});
 		</script>
 	</body>
