@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../css/receiver.css" />
+</head>
 <body class="initial">
 	<div class="messages">
 		<h1>Waiting for Messages...</h1>
@@ -11,13 +12,13 @@
 <script src="https://www.gstatic.com/cast/js/receiver/1.0/cast_receiver.js"></script>
 <script>
 	$(function() {
-		var receiver = new cast.receiver.Receiver('*** YOUR APP ID ****', ['*** YOUR NAMESPACE ***']),
-			channelHandler = new cast.receiver.ChannelHandler('*** YOUR NAMESPACE ***'),
+		var receiver = new cast.receiver.Receiver('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6', ['HelloWorld']),
+			channelHandler = new cast.receiver.ChannelHandler('HelloWorld'),
 			$messages = $('.messages'),
 			$body = $('body');
 		
 		channelHandler.addChannelFactory(
-			receiver.createChannelFactory('*** YOUR NAMESPACE ***'));
+			receiver.createChannelFactory('HelloWorld'));
 
 		receiver.start();
 
