@@ -3,6 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="css/receiver.css" />
 	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script src="https://www.gstatic.com/cast/js/receiver/1.0/cast_receiver.js"></script>
+	<script src="https://cdnapisec.kaltura.com/p/939341/sp/93934100/embedIframeJs/uiconf_id/17407591/partner_id/939341"></script>
 	<script>
 		$(function() {
 			var receiver = new cast.receiver.Receiver('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', ['HelloWorld']),
@@ -20,6 +21,19 @@
 			function onMessage(event) {
 				$messages.html(event.message.type);
 			}
+			
+			
+			kWidget.embed({
+			  "targetId": "kalturaplayer",
+			  "wid": "_939341",
+			  "uiconf_id": 17407591,
+			  "flashvars": {
+			    "streamerType": "auto",
+			    "autoPlay" : true
+			  },
+			  "entry_id": "0_bhkrfpa8"
+			});
+
 		});
 	</script>
 </head>
@@ -27,7 +41,7 @@
 	<div class="messages">
 		<h1>Waiting for Messages...</h1>
 	</div>
-	<div id="kalturaplayer" style="position:absolute;top:0;left:0;height:100%;width:100%">
+	<div id="kalturaplayer">
 	</div>
 </body>
 </html>
