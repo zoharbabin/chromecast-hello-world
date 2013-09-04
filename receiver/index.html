@@ -22,7 +22,6 @@
 				$messages.html(event.message.type);
 			}
 			
-			
 			kWidget.embed({
 				"targetId": "kalturaplayer",
 				'wid': '_243342',
@@ -43,11 +42,20 @@
 						'glowBlur': 4,
 						'glowColor': '0x133693'
 					}
+				},
+				'readyCallback': function( playerId ){
+					console.log('k-ready-called');
+					window.kdp = $('#'+playerId).get(0);
+					kdp.addJsListener("playerUpdatePlayhead", 'playerStartedPlaybackControlReady');
 				}
-
 			});
 
 		});
+		
+		function playerStartedPlaybackControlReady() {
+			kdp.removeJsListener("playerUpdatePlayhead", 'startSeekPlayer');
+			console.log('k-playback-control-ready');
+		}
 	</script>
 </head>
 <body class="initial">

@@ -2,6 +2,8 @@
 	<head>
 		<title>Hello World Chrome Sender</title>
 		<link rel="stylesheet" type="text/css" href="css/sender.css" />
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
 	</head>
 	<body>
 		<div class="receiver-div">
@@ -10,80 +12,80 @@
 				<li>Looking for receivers...</li>
 			</ul>
 		</div>
-		<button class="kill" disabled>Kill the Connection</button>
-	</body>
-
-	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-	<script src="http://underscorejs.org/underscore-min.js"></script>
-
-	<script>
-		var cast_api,
-			cv_activity,
-			receiverList,
-			$killSwitch = $('.kill');
-
-		window.addEventListener('message', function(event) {
-			if (event.source === window && event.data &&
-					event.data.source === 'CastApi' &&
-					event.data.event === 'Hello') {
-				initializeApi();
-			}
-		});
-
-		initializeApi = function() {
-			if (!cast_api) {
-				cast_api = new cast.Api();
-				cast_api.addReceiverListener('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', onReceiverList);
-			}
-		};
-
-		onReceiverList = function(list) {
-			if (list.length > 0) {
-				receiverList = list;
-				$('.receiver-list').empty();
-				receiverList.forEach(function(receiver) {
-					$listItem = $('<li><a href="#" data-id="' + receiver.id + '">' + receiver.name + '</a></li>');
-					$listItem.on('click', receiverClicked);
-					$('.receiver-list').append($listItem);
-				});
-			}
-		};
-
-		receiverClicked = function(e) {
-			e.preventDefault();
-
-			var $target = $(e.target),
-				receiver = _.find(receiverList, function(receiver) {
-					return receiver.id === $target.data('id');
-				});
-
-			doLaunch(receiver);
-		};
-
-		doLaunch = function(receiver) {
-			if (!cv_activity) {
-				var request = new cast.LaunchRequest('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', receiver);
-
-				$killSwitch.prop('disabled', false);
-
-				cast_api.launch(request, onLaunch);
-			}
-		};
-
-		onLaunch = function(activity) {
-			if (activity.status === 'running') {
-				cv_activity = activity;
-				
-				cast_api.sendMessage(cv_activity.activityId, 'HelloWorld', {type: 'HelloWorld'});
-			}
-		};
-
-		$killSwitch.on('click', function() {
-			cast_api.stopActivity(cv_activity.activityId, function(){
-				cv_activity = null;
-			
-				$killSwitch.prop('disabled', true);
+		<button class="btn" id="playbtn" disabled>Play</button>
+		<button class="btn" id="pausebtn" disabled>Pause</button>
+		<button class="btn" id="killconbtn" disabled>Kill the Connection</button>
+		<script>
+			var cast_api,
+				cv_activity,
+				receiverList,
+				$killSwitch = $('#killconbtn');
+				$playbtn = $('#playbtn');
+				$pausebtn = $('#pausebtn');
+	
+			window.addEventListener('message', function(event) {
+				if (event.source === window && event.data &&
+						event.data.source === 'CastApi' &&
+						event.data.event === 'Hello') {
+					initializeApi();
+				}
 			});
-		});
-	</script>
+	
+			initializeApi = function() {
+				if (!cast_api) {
+					cast_api = new cast.Api();
+					cast_api.addReceiverListener('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', onReceiverList);
+				}
+			};
+	
+			onReceiverList = function(list) {
+				if (list.length > 0) {
+					receiverList = list;
+					$('.receiver-list').empty();
+					receiverList.forEach(function(receiver) {
+						$listItem = $('<li><a href="#" data-id="' + receiver.id + '">' + receiver.name + '</a></li>');
+						$listItem.on('click', receiverClicked);
+						$('.receiver-list').append($listItem);
+					});
+				}
+			};
+	
+			receiverClicked = function(e) {
+				e.preventDefault();
+	
+				var $target = $(e.target),
+					receiver = _.find(receiverList, function(receiver) {
+						return receiver.id === $target.data('id');
+					});
+	
+				doLaunch(receiver);
+			};
+	
+			doLaunch = function(receiver) {
+				if (!cv_activity) {
+					var request = new cast.LaunchRequest('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', receiver);
+	
+					$killSwitch.prop('disabled', false);
+	
+					cast_api.launch(request, onLaunch);
+				}
+			};
+	
+			onLaunch = function(activity) {
+				if (activity.status === 'running') {
+					cv_activity = activity;
+					
+					cast_api.sendMessage(cv_activity.activityId, 'HelloWorld', {type: 'HelloWorld'});
+				}
+			};
+	
+			$killSwitch.on('click', function() {
+				cast_api.stopActivity(cv_activity.activityId, function(){
+					cv_activity = null;
+				
+					$killSwitch.prop('disabled', true);
+				});
+			});
+		</script>
+	</body>
 </html>
