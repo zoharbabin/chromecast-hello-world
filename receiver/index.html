@@ -19,6 +19,16 @@
 			channelHandler.addEventListener(cast.receiver.Channel.EventType.MESSAGE, onMessage.bind(this));
 	
 			function onMessage(event) {
+				switch(event.message.type)
+				{
+					case 'playPlayer':
+					  if (window.kdp) window.kdp.sendNotification('doPlay');
+					  break;
+					case 'pausePlayer':
+					  if (window.kdp) window.kdp.sendNotification('doPause');
+					  break;
+				}
+
 				$messages.html(event.message.type);
 			}
 			
