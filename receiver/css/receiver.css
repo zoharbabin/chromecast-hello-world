@@ -1,12 +1,17 @@
+* {
+	margin: 0;
+	padding: 0;
+}
 body {
-	background-color: white;
+	background-color: #1b7b8e;
+	background-image:url('../images/kalturabg.png');
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center; 
 }
 .messages {
 	position: absolute;
-	margin-top: 50%;
-	margin-left: 50%;
-	left: -137px;
-	top: -350px;
-	height: 700px;
-	width: 274px;
+	color: #BBCCFF;
+	top: 4%;
+	left: 30%;
 }
