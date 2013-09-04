@@ -33,7 +33,7 @@
 		initializeApi = function() {
 			if (!cast_api) {
 				cast_api = new cast.Api();
-				cast_api.addReceiverListener('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6', onReceiverList);
+				cast_api.addReceiverListener('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', onReceiverList);
 			}
 		};
 
@@ -62,7 +62,7 @@
 
 		doLaunch = function(receiver) {
 			if (!cv_activity) {
-				var request = new cast.LaunchRequest('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6', receiver);
+				var request = new cast.LaunchRequest('dbd1b72e-99b0-4198-9cf1-5f806e2c2dd6_1', receiver);
 
 				$killSwitch.prop('disabled', false);
 
